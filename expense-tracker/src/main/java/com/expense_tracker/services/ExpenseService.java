@@ -1,10 +1,8 @@
 package com.expense_tracker.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.*;
 import com.expense_tracker.DTOs.ExpenseRequest;
 import com.expense_tracker.DTOs.ExpenseResponse;
 import com.expense_tracker.entities.Expense;
@@ -44,6 +42,23 @@ public class ExpenseService {
                 saved.getPaymentmethod(),
                 saved.getNote(),
                 saved.getOwner().getFullName());
+    }
+
+    public List<ExpenseResponse> getAllExpenses(String email) {
+        List<Expense> list = expenseRepository.findByOwnerEmail(email);
+        ArrayList<ExpenseResponse> response = new ArrayList<>();
+        ExpenseResponse res = new ExpenseResponse();
+        for (int i = 0; i < list.size(); i++) {
+            res.setDate(list.get(i).getDate());
+            res.setAmount(list.get(i).getAmount());
+            res.setPaymentMethod(list.get(i).getPaymentmethod());
+            res.setNote(list.get(i).getNote());
+            res.setOwner(list.get(i).getOwner().getFullName());
+            response.add(res);
+        }
+
+        return response;
+
     }
 
 }
