@@ -47,8 +47,9 @@ public class ExpenseService {
     public List<ExpenseResponse> getAllExpenses(String email) {
         List<Expense> list = expenseRepository.findByOwnerEmail(email);
         ArrayList<ExpenseResponse> response = new ArrayList<>();
-        ExpenseResponse res = new ExpenseResponse();
+
         for (int i = 0; i < list.size(); i++) {
+            ExpenseResponse res = new ExpenseResponse();
             res.setDate(list.get(i).getDate());
             res.setAmount(list.get(i).getAmount());
             res.setPaymentMethod(list.get(i).getPaymentmethod());
